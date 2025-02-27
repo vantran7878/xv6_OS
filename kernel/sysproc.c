@@ -91,3 +91,24 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int sys_hello(void) {
+  printf("Hello, world!\n");
+  return 0;
+}
+
+uint64 sys_trace(void) {
+  int mask; 
+  char** cmd;
+
+  argint(0, &mask);
+  if (mask < 0) return 1;
+
+  printf("mask: %d", mask);
+  argaddr(1, (uint64 *)&cmd); 
+  if (cmd < 0) return -1;
+
+  printf("sys_trace: mask = %d, cmd = %s\n", mask, cmd[0]);
+
+  return 0;
+}
