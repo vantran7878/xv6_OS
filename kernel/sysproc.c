@@ -97,7 +97,8 @@ int sys_hello(void) {
   return 0;
 }
 
-uint64 sys_trace(void) {
+uint64 
+sys_trace(void) {
   int mask; 
   char** cmd;
 
@@ -109,6 +110,5 @@ uint64 sys_trace(void) {
   if (cmd < 0) return -1;
 
   printf("sys_trace: mask = %d, cmd = %s\n", mask, cmd[0]);
-
   return 0;
 }
