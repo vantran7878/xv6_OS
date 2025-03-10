@@ -1,19 +1,25 @@
 #include "../kernel/types.h"
 #include "user.h"
 
-uint Binaring_mask(int mask) {
-  uint result = 0, exponent = 1;
-  while(mask > 0) {
-    result += (mask % 2) * exponent;
-    mask /= 2;
-    exponent *= 10;
-  }
-  return result;
+int main(int argc, char *argv[]) {
+    if (argc < 3) {
+        fprintf(2, "Usage: trace mask command [args...]\n");
+        exit(1);
+    }
+
+    int mask = atoi(argv[1]);  // Convert the trace mask from string to int
+
+    if (trace(mask) < 0) {
+        fprintf(2, "trace: failed to set trace mask\n");
+        exit(1);
+    }
+
+    // Execute the command with arguments
+    exec(argv[2], &argv[2]);
+
+    // If exec fails, print an error and exit
+    fprintf(2, "trace: exec %s failed\n", argv[2]);
+    exit(1);
 }
 
-int main(int argc, char** argv) {
-  printf("user trace\n"); 
-  int mask_dec = atoi(argv[1]);
-  uint mask_bin = Binaring_mask(mask_dec); 
-  trace(mask_bin, argv + 2);
-}
+

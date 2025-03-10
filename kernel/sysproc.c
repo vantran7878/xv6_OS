@@ -99,16 +99,12 @@ int sys_hello(void) {
 
 uint64 
 sys_trace(void) {
-  int mask; 
-  char** cmd;
+  int trace_mask; 
 
-  argint(0, &mask);
-  if (mask < 0) return 1;
-
-  printf("mask: %d", mask);
-  argaddr(1, (uint64 *)&cmd); 
-  if (cmd < 0) return -1;
-
-  printf("sys_trace: mask = %d, cmd = %s\n", mask, cmd[0]);
+  argint(0, &trace_mask);
+  if (trace_mask < 0)
+    return -1;
+  
+  myproc()->trace_mask = trace_mask;
   return 0;
 }
