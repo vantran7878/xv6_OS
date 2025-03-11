@@ -180,3 +180,23 @@ filewrite(struct file *f, uint64 addr, int n)
   return ret;
 }
 
+// In file.c
+
+int
+fileopencount(void)
+{
+  int count = 0;
+  int i;
+
+  // Acquire the file table lock.
+  // (Note: Depending on your xv6 version the lock might be named differently,
+  // for example: ftable.lock or filelock. Adjust accordingly.)
+  acquire(&ftable.lock);
+  for(i = 0; i < NFILE; i++){
+    if(ftable.file[i].ref > 0)
+      count++;
+  }
+  release(&ftable.lock);
+  return count;
+}
+
