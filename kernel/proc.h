@@ -107,5 +107,3 @@ struct proc {
   int trace_mask;                    //Trace mask
 };
 
-int nproc(void);
-int fileopencount(void);
